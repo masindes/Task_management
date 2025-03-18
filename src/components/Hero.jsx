@@ -13,12 +13,6 @@ const Hero = () => {
           Organize, track, and complete your tasks with ease. Stay productive and
           never miss a deadline again.
         </p>
-        <Link
-          to="/tasks"
-          className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300"
-        >
-          Get Started
-        </Link>
       </div>
     </div>
   );
