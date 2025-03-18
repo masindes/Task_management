@@ -44,7 +44,7 @@ const Footer = () => {
             <h3 className="text-lg font-bold mb-4">Follow Us</h3>
             <div className="flex justify-center space-x-6">
               <a
-                href="https://github.com"
+                href="https://github.com/masindes"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-red-500 transition duration-300"
@@ -79,7 +79,7 @@ const Footer = () => {
         </div>
 
         {/* Copyright Notice */}
-        <div className="mt-8 border-t border-gray-700 pt-6 text-center">
+        <div className="mt-8 border-t border-gray-700 pt-1 text-center">
           <p className="text-sm">
             &copy; {new Date().getFullYear()} Task Manager. All rights reserved.
           </p>
