@@ -1,4 +1,4 @@
-// src/components/Navbar.jsx
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -12,7 +12,7 @@ const Navbar = () => {
           {/* Logo or Brand Name */}
           <Link
             to="/"
-            className="text-white text-3xl font-bold hover:text-gray-300 transition duration-300" 
+            className="text-white text-3xl font-bold hover:text-red-500 transition duration-300" 
           >
             Task Manager
           </Link>
@@ -21,7 +21,7 @@ const Navbar = () => {
           <div className="flex md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-white hover:text-gray-300 focus:outline-none"
+              className="text-white hover:text-red-500 focus:outline-none"
             >
               <svg
                 className="w-8 h-8"
@@ -43,19 +43,19 @@ const Navbar = () => {
           <div className="hidden md:flex md:items-center md:space-x-6">
             <Link
               to="/"
-              className="text-white hover:text-gray-300 px-4 py-3 rounded-md text-lg font-medium transition duration-300" // Increased text size to text-lg and padding
+              className="text-white hover:text-red-500 px-4 py-3 rounded-md text-lg font-medium transition duration-300" // Increased text size to text-lg and padding
             >
               Home
             </Link>
             <Link
               to="/tasks"
-              className="text-white hover:text-gray-300 px-4 py-3 rounded-md text-lg font-medium transition duration-300"
+              className="text-white hover:text-red-500 px-4 py-3 rounded-md text-lg font-medium transition duration-300"
             >
               Tasks
             </Link>
             <Link
               to="/about"
-              className="text-white hover:text-gray-300 px-4 py-3 rounded-md text-lg font-medium transition duration-300"
+              className="text-white hover:text-red-500 px-4 py-3 rounded-md text-lg font-medium transition duration-300"
             >
               About
             </Link>
@@ -68,19 +68,19 @@ const Navbar = () => {
             <div className="px-2 pt-2 pb-4 space-y-2 sm:px-3">
               <Link
                 to="/"
-                className="block text-white hover:text-gray-300 px-4 py-3 rounded-md text-lg font-medium transition duration-300" // Increased text size to text-lg and padding
+                className="block text-white hover:text-red-500 px-4 py-3 rounded-md text-lg font-medium transition duration-300" // Increased text size to text-lg and padding
               >
                 Home
               </Link>
               <Link
                 to="/tasks"
-                className="block text-white hover:text-gray-300 px-4 py-3 rounded-md text-lg font-medium transition duration-300"
+                className="block text-white hover:text-red-500 px-4 py-3 rounded-md text-lg font-medium transition duration-300"
               >
                 Tasks
               </Link>
               <Link
                 to="/about"
-                className="block text-white hover:text-gray-300 px-4 py-3 rounded-md text-lg font-medium transition duration-300"
+                className="block text-white hover:text-red-500 px-4 py-3 rounded-md text-lg font-medium transition duration-300"
               >
                 About
               </Link>

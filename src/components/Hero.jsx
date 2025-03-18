@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
-    <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white py-20">
+    <div className="bg-gradient-to-r from-sky-500 to-green-500 text-white py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
           Manage Your Tasks Effortlessly
