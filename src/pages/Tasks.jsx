@@ -116,13 +116,13 @@ const TaskManager = () => {
   const statusColumns = ["Pending", "In Progress", "Completed"];
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4">
+    <div className="min-h-screen bg-gray-50 text-gray-900 p-4">
       <ToastContainer position="top-right" autoClose={2000} />
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold text-purple-400 text-center mb-6">Task Manager</h1>
+        <h1 className="text-4xl font-bold text-blue-600 text-center mb-6">Task Manager</h1>
 
         {/* Add/Edit Form */}
-        <form onSubmit={handleAddOrUpdateTask} className="bg-gray-800 p-6 rounded-lg shadow-md mb-8">
+        <form onSubmit={handleAddOrUpdateTask} className="bg-white p-6 rounded-lg shadow-md mb-8">
           <div className="grid grid-cols-1 gap-4">
             <input
               type="text"
@@ -130,7 +130,7 @@ const TaskManager = () => {
               value={newTask.title}
               onChange={handleInputChange}
               placeholder="Task Title"
-              className="p-3 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-gray-700 text-white"
+              className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
               required
             />
             <textarea
@@ -138,14 +138,14 @@ const TaskManager = () => {
               value={newTask.description}
               onChange={handleInputChange}
               placeholder="Task Description"
-              className="p-3 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-gray-700 text-white"
+              className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
               required
             />
             <select
               name="status"
               value={newTask.status}
               onChange={handleInputChange}
-              className="p-3 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-gray-700 text-white"
+              className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
             >
               <option value="Pending">Pending</option>
               <option value="In Progress">In Progress</option>
@@ -153,7 +153,7 @@ const TaskManager = () => {
             </select>
             <button
               type="submit"
-              className="p-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition duration-300"
+              className="p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
             >
               {isEditing ? "Update Task" : "Add Task"}
             </button>
@@ -167,12 +167,12 @@ const TaskManager = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search tasks..."
-            className="w-full p-3 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-gray-700 text-white"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
-              className="p-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition duration-300"
+              className="p-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition duration-300"
             >
               Clear
             </button>
@@ -182,31 +182,31 @@ const TaskManager = () => {
         {/* Kanban Board */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {statusColumns.map((status) => (
-            <div key={status} className="bg-gray-800 p-4 rounded-lg shadow-md">
-              <h2 className="text-xl font-semibold text-purple-400 mb-4">{status}</h2>
+            <div key={status} className="bg-white p-4 rounded-lg shadow-md">
+              <h2 className="text-xl font-semibold text-blue-600 mb-4">{status}</h2>
               {groupedTasks[status]?.length > 0 ? (
                 groupedTasks[status].map((task) => (
-                  <div key={task.id} className="bg-gray-700 p-4 rounded-lg mb-4">
-                    <h3 className="text-lg font-semibold text-white">{task.title}</h3>
-                    <p className="text-sm text-gray-300 mt-2">{task.description}</p>
+                  <div key={task.id} className="bg-gray-50 p-4 rounded-lg mb-4">
+                    <h3 className="text-lg font-semibold text-gray-900">{task.title}</h3>
+                    <p className="text-sm text-gray-600 mt-2">{task.description}</p>
                     <div className="mt-4 flex gap-2">
                       {task.status !== "Completed" && (
                         <button
                           onClick={() => handleMarkCompleted(task.id)}
-                          className="px-3 py-1 bg-teal-500 text-white rounded-lg hover:bg-teal-700 transition duration-300"
+                          className="px-3 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300"
                         >
                           Complete
                         </button>
                       )}
                       <button
                         onClick={() => handleEditTask(task)}
-                        className="px-3 py-1 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition duration-300"
+                        className="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition duration-300"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => handleDeleteTask(task.id)}
-                        className="px-3 py-1 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition duration-300"
+                        className="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300"
                       >
                         Delete
                       </button>
@@ -214,7 +214,7 @@ const TaskManager = () => {
                   </div>
                 ))
               ) : (
-                <p className="text-gray-400 text-center">No tasks in this column.</p>
+                <p className="text-gray-500 text-center">No tasks in this column.</p>
               )}
             </div>
           ))}
