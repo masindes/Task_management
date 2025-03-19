@@ -119,7 +119,7 @@ const TaskManager = () => {
     <div className="min-h-screen bg-gray-900 text-white p-4">
       <ToastContainer position="top-right" autoClose={2000} />
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold text-white text-center mb-6">Task Manager</h1>
+        <h1 className="text-4xl font-bold text-purple-400 text-center mb-6">Task Manager</h1>
 
         {/* Add/Edit Form */}
         <form onSubmit={handleAddOrUpdateTask} className="bg-gray-800 p-6 rounded-lg shadow-md mb-8">
@@ -130,7 +130,7 @@ const TaskManager = () => {
               value={newTask.title}
               onChange={handleInputChange}
               placeholder="Task Title"
-              className="p-3 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-700 text-white"
+              className="p-3 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-gray-700 text-white"
               required
             />
             <textarea
@@ -138,14 +138,14 @@ const TaskManager = () => {
               value={newTask.description}
               onChange={handleInputChange}
               placeholder="Task Description"
-              className="p-3 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-700 text-white"
+              className="p-3 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-gray-700 text-white"
               required
             />
             <select
               name="status"
               value={newTask.status}
               onChange={handleInputChange}
-              className="p-3 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-700 text-white"
+              className="p-3 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-gray-700 text-white"
             >
               <option value="Pending">Pending</option>
               <option value="In Progress">In Progress</option>
@@ -153,7 +153,7 @@ const TaskManager = () => {
             </select>
             <button
               type="submit"
-              className="p-3 bg-blue-600 text-white rounded-lg hover:bg-green-500 transition duration-300"
+              className="p-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition duration-300"
             >
               {isEditing ? "Update Task" : "Add Task"}
             </button>
@@ -167,12 +167,12 @@ const TaskManager = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search tasks..."
-            className="w-full p-3 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-700 text-white"
+            className="w-full p-3 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-gray-700 text-white"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
-              className="p-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-300"
+              className="p-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition duration-300"
             >
               Clear
             </button>
@@ -183,7 +183,7 @@ const TaskManager = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {statusColumns.map((status) => (
             <div key={status} className="bg-gray-800 p-4 rounded-lg shadow-md">
-              <h2 className="text-xl font-semibold text-blue-400 mb-4">{status}</h2>
+              <h2 className="text-xl font-semibold text-purple-400 mb-4">{status}</h2>
               {groupedTasks[status]?.length > 0 ? (
                 groupedTasks[status].map((task) => (
                   <div key={task.id} className="bg-gray-700 p-4 rounded-lg mb-4">
@@ -193,7 +193,7 @@ const TaskManager = () => {
                       {task.status !== "Completed" && (
                         <button
                           onClick={() => handleMarkCompleted(task.id)}
-                          className="px-3 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-300"
+                          className="px-3 py-1 bg-teal-500 text-white rounded-lg hover:bg-teal-700 transition duration-300"
                         >
                           Complete
                         </button>
@@ -206,7 +206,7 @@ const TaskManager = () => {
                       </button>
                       <button
                         onClick={() => handleDeleteTask(task.id)}
-                        className="px-3 py-1 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-300"
+                        className="px-3 py-1 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition duration-300"
                       >
                         Delete
                       </button>
