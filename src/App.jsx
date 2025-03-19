@@ -22,7 +22,7 @@ const App = () => {
           <Hero />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} /> {/* Add Login route */}
+            <Route path="/login" element={<Login />} /> 
             <Route path="/home" element={<Home />} /> 
       
             <Route
@@ -30,7 +30,7 @@ const App = () => {
               element={
                 // <ProtectedRoute> {/* Protect the Tasks route */}
                   <Tasks />
-                // {/* </ProtectedRoute> */}
+                // </ProtectedRoute>
               }
             />
             <Route path="/about" element={<About />} />

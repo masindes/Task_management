@@ -72,8 +72,8 @@ const Footer = () => {
           {/* Contact Information */}
           <div className="text-center md:text-right">
             <h3 className="text-md font-semibold mb-3">Contact Us</h3>
-            <p className="mb-1 text-sm">Email: watty.s@outlook.com</p>
-            <p className="text-sm">Phone: +254 712 258 858</p>
+            <p className="mb-1 text-sm">Email: info@pesira.io</p>
+            <p className="text-sm">Phone: +254 113 601598</p>
           </div>
         </div>
 
