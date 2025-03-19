@@ -2,17 +2,9 @@ import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// Debounce function to delay search
-const debounce = (func, delay) => {
-  let timeoutId;
-  return (...args) => {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => func(...args), delay);
-  };
-};
-
 const TaskManager = () => {
-  const [tasks, setTasks] = useState([
+  // Load tasks from localStorage on component mount
+  const initialTasks = JSON.parse(localStorage.getItem("tasks")) || [
     {
       id: 1,
       title: "Complete Project Proposal",
@@ -31,33 +23,22 @@ const TaskManager = () => {
       description: "Go through the codebase and identify areas for improvement.",
       status: "Completed",
     },
-  ]);
+  ];
 
+  const [tasks, setTasks] = useState(initialTasks);
   const [newTask, setNewTask] = useState({
     title: "",
     description: "",
     status: "Pending",
   });
-
   const [isEditing, setIsEditing] = useState(false);
   const [editTaskId, setEditTaskId] = useState(null);
-  const [searchQuery, setSearchQuery] = useState(""); 
-  const [filteredTasks, setFilteredTasks] = useState(tasks); 
+  const [searchQuery, setSearchQuery] = useState("");
 
-  // Debounced search function
-  const debouncedSearch = debounce((query) => {
-    const filtered = tasks.filter(
-      (task) =>
-        task.title.toLowerCase().includes(query.toLowerCase()) ||
-        task.description.toLowerCase().includes(query.toLowerCase())
-    );
-    setFilteredTasks(filtered);
-  }, 300);
-
-  // Update filtered tasks when search query changes
+  // Save tasks to localStorage whenever they change
   useEffect(() => {
-    debouncedSearch(searchQuery);
-  }, [searchQuery, tasks]);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -103,18 +84,25 @@ const TaskManager = () => {
   };
 
   const handleDeleteTask = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id));
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    setTasks(updatedTasks);
     toast.info("Task deleted!");
   };
 
   const handleMarkCompleted = (id) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === id ? { ...task, status: "Completed" } : task
-      )
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, status: "Completed" } : task
     );
+    setTasks(updatedTasks);
     toast.success("Task marked as completed!");
   };
+
+  // Filter tasks based on search query
+  const filteredTasks = tasks.filter(
+    (task) =>
+      task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      task.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   // Group filtered tasks by status
   const groupedTasks = filteredTasks.reduce((acc, task) => {
