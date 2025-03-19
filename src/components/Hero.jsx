@@ -1,10 +1,9 @@
-// src/components/Hero.jsx
 import React from "react";
 import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
-    <div className="bg-gradient-to-r from-sky-500 to-green-500 text-white py-20">
+    <div className="bg-gradient-to-r from-gray-800 to-green-800 text-white pt-32 pb-20"> {/* Increased top padding to pt-32 */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
           Manage Your Tasks Effortlessly
