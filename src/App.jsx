@@ -31,17 +31,17 @@ const App = () => {
             <Route
               path="/tasks"
               element={
-                // <ProtectedRoute> {/* Protect the Tasks route */}
-                  <Tasks />
-                /* </ProtectedRoute> */
+                  
+                <Tasks />
+                 
               }
             />
             <Route
               path="/task/:id"
               element={
-                // <ProtectedRoute> {/* Protect the TaskDetails route */}
-                  <TaskDetails />
-                /* </ProtectedRoute> */
+                 
+                <TaskDetails />
+                
               }
             />
           </Routes>
