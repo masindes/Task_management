@@ -11,7 +11,7 @@ const About = () => {
       
       <div className="text-center mb-12">
         <p className="text-xl text-gray-700 leading-relaxed">
-          Welcome to <strong className="text-blue-600">Task Manager</strong>, your
+          Welcome to <strong className="text-green-600">Task Manager</strong>, your
           go-to application for managing tasks efficiently and staying organized.
           Whether you're working on personal projects or collaborating with a
           team, Task Manager helps you keep track of your tasks, deadlines, and
