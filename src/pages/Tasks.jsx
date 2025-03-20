@@ -123,7 +123,7 @@ const TaskManager = () => {
       <ToastContainer position="top-right" autoClose={2000} />
       <div className="max-w-6xl mx-auto">
         <h1 className="text-4xl font-bold text-green-800 text-center mb-6">
-          Farm Task Manager
+          Task Manager
         </h1>
 
         
