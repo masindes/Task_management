@@ -3,7 +3,7 @@ import React from "react";
 const About = () => {
   return (
     <div className="p-8 max-w-6xl mx-auto bg-white rounded-lg shadow-lg">
-      {/* Title Section */}
+      
       <h1 className="text-5xl font-bold text-center text-gray-900 mb-8">
         About Task Manager
       </h1>
@@ -77,12 +77,10 @@ const About = () => {
       {/* Call to Action Section */}
       <div className="text-center">
         <p className="text-xl text-gray-700 mb-6">
-          Ready to get started? Join thousands of users who are already
+           Join thousands of users who are already
           organizing their tasks with Task Manager!
         </p>
-        <button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300">
-          Get Started
-        </button>
+        
       </div>
     </div>
   );
