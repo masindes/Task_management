@@ -2,11 +2,11 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { TaskProvider } from "./context/TaskContext";
-import { AuthProvider } from "./context/AuthContext"; // Import AuthProvider
+import { AuthProvider } from "./context/AuthContext"; 
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Home from "./pages/Home";
-import TaskDetails from "./components/TaskDetails"; // Import TaskDetails page
+import TaskDetails from "./components/TaskDetails";
 import ProtectedRoute from "./context/ProtectedRoute"; 
 import Tasks from "./pages/Tasks";
 import About from "./pages/About";
