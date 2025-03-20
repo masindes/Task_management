@@ -1,4 +1,3 @@
-// src/context/AuthContext.js
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
@@ -8,7 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Check if the user is authenticated on initial load
+  
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -31,7 +30,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  // Login function
+  
   const login = async (username, password) => {
     try {
       const response = await axios.post("/api/auth/login", { username, password });
@@ -43,7 +42,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Register function
+  
   const register = async (username, password) => {
     try {
       const response = await axios.post("/api/auth/register", { username, password });
@@ -55,7 +54,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Logout function
+  
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
