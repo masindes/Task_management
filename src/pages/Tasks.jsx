@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
 const TaskManager = () => {
-  // Load tasks from localStorage on component mount
+  const navigate = useNavigate();
+
+  
   const initialTasks = JSON.parse(localStorage.getItem("tasks")) || [
     {
       id: 1,
@@ -97,14 +100,14 @@ const TaskManager = () => {
     toast.success("Task marked as completed!");
   };
 
-  // Filter tasks based on search query
+ 
   const filteredTasks = tasks.filter(
     (task) =>
       task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       task.description.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Group filtered tasks by status
+  
   const groupedTasks = filteredTasks.reduce((acc, task) => {
     if (!acc[task.status]) {
       acc[task.status] = [];
@@ -116,13 +119,18 @@ const TaskManager = () => {
   const statusColumns = ["Pending", "In Progress", "Completed"];
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 p-4">
+    <div className="min-h-screen bg-green-50 text-gray-800 p-4">
       <ToastContainer position="top-right" autoClose={2000} />
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold text-blue-600 text-center mb-6">Task Manager</h1>
+        <h1 className="text-4xl font-bold text-green-800 text-center mb-6">
+          Farm Task Manager
+        </h1>
 
-        {/* Add/Edit Form */}
-        <form onSubmit={handleAddOrUpdateTask} className="bg-white p-6 rounded-lg shadow-md mb-8">
+        
+        <form
+          onSubmit={handleAddOrUpdateTask}
+          className="bg-white p-6 rounded-lg shadow-md mb-8 border border-green-100"
+        >
           <div className="grid grid-cols-1 gap-4">
             <input
               type="text"
@@ -130,7 +138,7 @@ const TaskManager = () => {
               value={newTask.title}
               onChange={handleInputChange}
               placeholder="Task Title"
-              className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
+              className="p-3 border border-green-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 bg-white text-gray-800"
               required
             />
             <textarea
@@ -138,14 +146,14 @@ const TaskManager = () => {
               value={newTask.description}
               onChange={handleInputChange}
               placeholder="Task Description"
-              className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
+              className="p-3 border border-green-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 bg-white text-gray-800"
               required
             />
             <select
               name="status"
               value={newTask.status}
               onChange={handleInputChange}
-              className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
+              className="p-3 border border-green-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 bg-white text-gray-800"
             >
               <option value="Pending">Pending</option>
               <option value="In Progress">In Progress</option>
@@ -153,68 +161,53 @@ const TaskManager = () => {
             </select>
             <button
               type="submit"
-              className="p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
+              className="p-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-300"
             >
               {isEditing ? "Update Task" : "Add Task"}
             </button>
           </div>
         </form>
 
-        {/* Search Bar */}
+        
         <div className="mb-6 flex gap-2">
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search tasks..."
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
+            className="w-full p-3 border border-green-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 bg-white text-gray-800"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
-              className="p-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition duration-300"
+              className="p-3 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition duration-300"
             >
               Clear
             </button>
           )}
         </div>
 
-        {/* Kanban Board */}
+        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {statusColumns.map((status) => (
-            <div key={status} className="bg-white p-4 rounded-lg shadow-md">
-              <h2 className="text-xl font-semibold text-blue-600 mb-4">{status}</h2>
+            <div
+              key={status}
+              className="bg-white p-4 rounded-lg shadow-md border border-green-100"
+            >
+              <h2 className="text-xl font-semibold text-green-800 mb-4">{status}</h2>
               {groupedTasks[status]?.length > 0 ? (
                 groupedTasks[status].map((task) => (
-                  <div key={task.id} className="bg-gray-50 p-4 rounded-lg mb-4">
-                    <h3 className="text-lg font-semibold text-gray-900">{task.title}</h3>
-                    <p className="text-sm text-gray-600 mt-2">{task.description}</p>
-                    <div className="mt-4 flex gap-2">
-                      {task.status !== "Completed" && (
-                        <button
-                          onClick={() => handleMarkCompleted(task.id)}
-                          className="px-3 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300"
-                        >
-                          Complete
-                        </button>
-                      )}
-                      <button
-                        onClick={() => handleEditTask(task)}
-                        className="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition duration-300"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDeleteTask(task.id)}
-                        className="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300"
-                      >
-                        Delete
-                      </button>
-                    </div>
+                  <div
+                    key={task.id}
+                    onClick={() => navigate(`/task/${task.id}`)}
+                    className="bg-green-50 p-4 rounded-lg mb-4 cursor-pointer hover:bg-green-100 transition duration-300"
+                  >
+                    <h3 className="text-lg font-semibold text-green-900">{task.title}</h3>
+                    <p className="text-sm text-green-700 mt-2">{task.description}</p>
                   </div>
                 ))
               ) : (
-                <p className="text-gray-500 text-center">No tasks in this column.</p>
+                <p className="text-green-600 text-center">No tasks in this column.</p>
               )}
             </div>
           ))}

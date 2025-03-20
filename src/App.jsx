@@ -6,34 +6,44 @@ import { AuthProvider } from "./context/AuthContext"; // Import AuthProvider
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Home from "./pages/Home";
+import TaskDetails from "./components/TaskDetails"; // Import TaskDetails page
+import ProtectedRoute from "./context/ProtectedRoute"; 
 import Tasks from "./pages/Tasks";
 import About from "./pages/About";
-import Login from "./pages/Login"; // Import Login page
-// import Register from "./pages/Register"; // Import Register page
+import Login from "./pages/Login";
 import Footer from "./components/Footer";
-import ProtectedRoute from "./context/ProtectedRoute"; // Import ProtectedRoute
 
 const App = () => {
   return (
-    <AuthProvider> {/* Wrap the app with AuthProvider */}
+    <AuthProvider> 
       <TaskProvider>
         <Router>
           <Navbar />
           <Hero />
           <Routes>
+            
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} /> 
             <Route path="/home" element={<Home />} /> 
-      
+            <Route path="/about" element={<About />} />
+
+            
             <Route
               path="/tasks"
               element={
                 // <ProtectedRoute> {/* Protect the Tasks route */}
                   <Tasks />
-                // </ProtectedRoute>
+                /* </ProtectedRoute> */
               }
             />
-            <Route path="/about" element={<About />} />
+            <Route
+              path="/task/:id"
+              element={
+                // <ProtectedRoute> {/* Protect the TaskDetails route */}
+                  <TaskDetails />
+                /* </ProtectedRoute> */
+              }
+            />
           </Routes>
           <Footer />
         </Router>
