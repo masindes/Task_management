@@ -8,7 +8,7 @@ const About = () => {
         About Task Manager
       </h1>
 
-      {/* Introduction Section */}
+      
       <div className="text-center mb-12">
         <p className="text-xl text-gray-700 leading-relaxed">
           Welcome to <strong className="text-blue-600">Task Manager</strong>, your
@@ -19,7 +19,7 @@ const About = () => {
         </p>
       </div>
 
-      {/* Image Section */}
+      
       <div className="flex justify-center mb-12">
         <img
           src="src/assets/images/pngwing.com (14).png"
