@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ChevronLeftIcon } from "@heroicons/react/solid"; 
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';  
+import { ChevronLeftIcon } from "@heroicons/react/solid";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const TaskDetails = () => {
   const { id } = useParams();
@@ -46,7 +46,7 @@ const TaskDetails = () => {
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
     setTask({ ...task, ...updatedTask });
     setIsEditing(false);
-    
+
     toast.success("Task updated successfully!", {
       position: "top-right",
       autoClose: 3000,
@@ -64,7 +64,7 @@ const TaskDetails = () => {
       const updatedTasks = tasks.filter((t) => t.id !== task.id);
       localStorage.setItem("tasks", JSON.stringify(updatedTasks));
       navigate("/tasks");
-      
+
       toast.error("Task deleted successfully!", {
         position: "top-right",
         autoClose: 3000,
@@ -101,7 +101,7 @@ const TaskDetails = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-gray-100 p-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-gray-100 p-4">
       <div
         onClick={() => navigate("/tasks")}
         className="cursor-pointer text-green-500 hover:text-green-300 transition duration-300 flex items-center gap-2 mb-6"
@@ -111,8 +111,8 @@ const TaskDetails = () => {
         <span className="text-lg font-semibold">Back to Tasks</span>
       </div>
 
-      <div className="max-w-3xl mx-auto bg-gray-900 p-8 rounded-xl shadow-2xl">
-        <h1 className="text-4xl font-bold text-green-400 text-center mb-6">
+      <div className="max-w-3xl mx-auto bg-gray-900 p-6 rounded-xl shadow-2xl">
+        <h1 className="text-3xl font-bold text-green-400 text-center mb-6">
           Task Details
         </h1>
         <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
@@ -156,16 +156,16 @@ const TaskDetails = () => {
                   <option value="completed">Completed</option>
                 </select>
               </div>
-              <div className="mt-6 flex gap-6 justify-center">
+              <div className="mt-6 flex flex-col md:flex-row gap-4 justify-center">
                 <button
                   onClick={handleUpdate}
-                  className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-300 shadow-lg"
+                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-300 shadow-lg"
                 >
                   Save Changes
                 </button>
                 <button
                   onClick={() => setIsEditing(false)}
-                  className="px-6 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition duration-300 shadow-lg"
+                  className="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition duration-300 shadow-lg"
                 >
                   Cancel
                 </button>
@@ -173,30 +173,32 @@ const TaskDetails = () => {
             </>
           ) : (
             <>
-              <h2 className="text-3xl font-semibold text-green-300 mb-4">
+              <h2 className="text-2xl font-semibold text-green-300 mb-4">
                 {task.title}
               </h2>
               <p className="text-gray-400 mb-6">{task.description}</p>
               <p className="text-sm text-gray-300 mb-6">Status: {task.status}</p>
-              <div className="mt-6 flex gap-6 justify-center">
+              <div className="mt-6 flex flex-col md:flex-row gap-4 justify-center">
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="px-6 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition duration-300 shadow-lg"
+                  className="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition duration-300 shadow-lg"
                 >
                   Edit Task
                 </button>
                 <button
                   onClick={handleDelete}
-                  className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-300 shadow-lg"
+                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-300 shadow-lg"
                 >
                   Delete Task
                 </button>
-                <button
-                  onClick={handleComplete}
-                  className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-300 shadow-lg"
-                >
-                  Mark as Complete
-                </button>
+                {task.status !== "completed" && (
+                  <button
+                    onClick={handleComplete}
+                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-300 shadow-lg"
+                  >
+                    Mark as Complete
+                  </button>
+                )}
               </div>
             </>
           )}
