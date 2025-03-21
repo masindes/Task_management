@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/images/t_logo.png";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const isLoggedIn = localStorage.getItem("token"); 
-
 
   const handleLogout = () => {
     localStorage.removeItem("token"); 
@@ -17,13 +15,10 @@ const Navbar = () => {
     <nav className="fixed w-full bg-green-900 shadow-md z-50">
       <div className="container mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between h-20">
-          
           <Link to="/" className="flex items-center space-x-2">
-            <img src={logo} alt="Task Manager Logo" className="h-10 w-auto" />
+            <img src="/images/t_logo.png" alt="Task Manager Logo" className="h-10 w-auto" />
             <h1 className="text-white hover:text-green-500 text-2xl font-semibold">Task Manager</h1>
           </Link>
-
-          
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -34,8 +29,6 @@ const Navbar = () => {
               </svg>
             </button>
           </div>
-
-          
           <div className="hidden md:flex items-center space-x-6">
             {["Home", "Tasks", "About"].map((item) => (
               <Link
@@ -46,8 +39,6 @@ const Navbar = () => {
                 {item}
               </Link>
             ))}
-
-           
             {isLoggedIn ? (
               <button
                 onClick={handleLogout}
@@ -65,8 +56,6 @@ const Navbar = () => {
             )}
           </div>
         </div>
-
-        
         {isMenuOpen && (
           <div className="md:hidden absolute top-20 left-0 w-full bg-gray-800 shadow-lg">
             <div className="flex flex-col items-center py-4 space-y-3">
@@ -80,8 +69,6 @@ const Navbar = () => {
                   {item}
                 </Link>
               ))}
-
-              
               {isLoggedIn ? (
                 <button
                   onClick={handleLogout}
