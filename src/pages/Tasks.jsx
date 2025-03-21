@@ -226,41 +226,19 @@ const TaskManager = () => {
           onSubmit={handleAddOrUpdateTask}
           className="bg-white p-6 rounded-lg shadow-md mb-8 border border-[#4caf50]"
         >
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <div className="flex flex-col">
-              <label className="text-sm font-semibold text-[#388e3c] mb-2">Task Title</label>
-              <input
-                type="text"
-                name="title"
-                value={newTask.title}
-                onChange={handleInputChange}
-                placeholder="Task Title"
-                className="p-3 border border-[#4caf50] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#388e3c] bg-white text-[#388e3c]"
-                required
-              />
-              {formErrors.title && (
-                <div className="text-red-600 text-sm mt-1">{formErrors.title}</div>
-              )}
-            </div>
-
-            <div className="flex flex-col">
-              <label className="text-sm font-semibold text-[#388e3c] mb-2">Due Date</label>
-              <input
-                type="date"
-                name="due_date"
-                value={newTask.due_date}
-                onChange={handleInputChange}
-                className="p-3 border border-[#4caf50] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#388e3c] bg-white text-[#388e3c]"
-                required
-              />
-              {formErrors.due_date && (
-                <div className="text-red-600 text-sm mt-1">{formErrors.due_date}</div>
-              )}
-            </div>
-          </div>
-
-          <div className="flex flex-col mt-6">
-            <label className="text-sm font-semibold text-[#388e3c] mb-2">Task Description</label>
+          <div className="grid grid-cols-1 gap-4">
+            <input
+              type="text"
+              name="title"
+              value={newTask.title}
+              onChange={handleInputChange}
+              placeholder="Task Title"
+              className="p-3 border border-[#4caf50] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#388e3c] bg-white text-[#388e3c]"
+              required
+            />
+            {formErrors.title && (
+              <div className="text-red-600 text-sm mt-1">{formErrors.title}</div>
+            )}
             <textarea
               name="description"
               value={newTask.description}
@@ -272,12 +250,30 @@ const TaskManager = () => {
             {formErrors.description && (
               <div className="text-red-600 text-sm mt-1">{formErrors.description}</div>
             )}
-          </div>
-
-          <div className="mt-6">
+            <input
+              type="date"
+              name="due_date"
+              value={newTask.due_date}
+              onChange={handleInputChange}
+              className="p-3 border border-[#4caf50] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#388e3c] bg-white text-[#388e3c]"
+              required
+            />
+            {formErrors.due_date && (
+              <div className="text-red-600 text-sm mt-1">{formErrors.due_date}</div>
+            )}
+            <select
+              name="status"
+              value={newTask.status}
+              onChange={handleInputChange}
+              className="p-3 border border-[#4caf50] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#388e3c] bg-white text-[#388e3c]"
+            >
+              <option value="Pending">Pending</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+            </select>
             <button
               type="submit"
-              className="p-3 w-full bg-[#388e3c] text-white rounded-lg hover:bg-[#2e7d32] transition duration-300"
+              className="p-3 bg-[#388e3c] text-white rounded-lg hover:bg-[#2e7d32] transition duration-300"
             >
               {isEditing ? "Update Task" : "Add Task"}
             </button>
