@@ -29,10 +29,10 @@ const App = () => {
             {/* Route for tasks list */}
             <Route path="/tasks" element={<Tasks />} />
             
-            {/* Route for individual task details */}
+            
             <Route path="/task/:id" element={<TaskDetails />} />
             
-            {/* Route for editing task */}
+            
             <Route path="/task/:id/edit" element={<TaskEdit />} />  {/* Add this route */}
           </Routes>
           <Footer />
