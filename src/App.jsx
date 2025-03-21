@@ -11,7 +11,7 @@ import Tasks from "./pages/Tasks";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import Footer from "./components/Footer";
-import TaskEdit from "./pages/TaskEdit";  // Import the TaskEdit component
+import TaskEdit from "./pages/TaskEdit";  
 
 const App = () => {
   return (
@@ -26,14 +26,14 @@ const App = () => {
             <Route path="/home" element={<Home />} /> 
             <Route path="/about" element={<About />} />
 
-            {/* Route for tasks list */}
+            
             <Route path="/tasks" element={<Tasks />} />
             
             
             <Route path="/task/:id" element={<TaskDetails />} />
             
             
-            <Route path="/task/:id/edit" element={<TaskEdit />} />  {/* Add this route */}
+            <Route path="/task/:id/edit" element={<TaskEdit />} /> 
           </Routes>
           <Footer />
         </Router>
