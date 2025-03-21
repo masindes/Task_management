@@ -1,15 +1,23 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/t_logo.png";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const isLoggedIn = localStorage.getItem("token"); 
+
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); 
+    navigate("/login"); 
+  };
 
   return (
     <nav className="fixed w-full bg-green-900 shadow-md z-50">
       <div className="container mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between h-20">
-         
+          
           <Link to="/" className="flex items-center space-x-2">
             <img src={logo} alt="Task Manager Logo" className="h-10 w-auto" />
             <h1 className="text-white hover:text-green-500 text-2xl font-semibold">Task Manager</h1>
@@ -38,13 +46,23 @@ const Navbar = () => {
                 {item}
               </Link>
             ))}
+
            
-            <Link
-              to="/login"
-              className="text-white hover:text-green-500 px-5 py-3 rounded-lg text-lg font-medium transition ease-in-out duration-300"
-            >
-              Login
-            </Link>
+            {isLoggedIn ? (
+              <button
+                onClick={handleLogout}
+                className="text-white hover:text-green-500 px-5 py-3 rounded-lg text-lg font-medium transition ease-in-out duration-300"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                className="text-white hover:text-green-500 px-5 py-3 rounded-lg text-lg font-medium transition ease-in-out duration-300"
+              >
+                Login
+              </Link>
+            )}
           </div>
         </div>
 
@@ -62,14 +80,24 @@ const Navbar = () => {
                   {item}
                 </Link>
               ))}
+
               
-              <Link
-                to="/login"
-                className="block text-white hover:text-green-500 px-6 py-3 rounded-md text-lg font-medium transition duration-300"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Login
-              </Link>
+              {isLoggedIn ? (
+                <button
+                  onClick={handleLogout}
+                  className="block text-white hover:text-green-500 px-6 py-3 rounded-md text-lg font-medium transition duration-300"
+                >
+                  Logout
+                </button>
+              ) : (
+                <Link
+                  to="/login"
+                  className="block text-white hover:text-green-500 px-6 py-3 rounded-md text-lg font-medium transition duration-300"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Login
+                </Link>
+              )}
             </div>
           </div>
         )}

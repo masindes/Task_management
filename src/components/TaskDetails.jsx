@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ChevronLeftIcon } from "@heroicons/react/solid";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 const TaskDetails = () => {
   const { id } = useParams();
@@ -16,19 +17,44 @@ const TaskDetails = () => {
   });
 
   useEffect(() => {
-    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    const foundTask = tasks.find((task) => task.id === parseInt(id));
-    if (foundTask) {
-      setTask(foundTask);
-      setUpdatedTask({
-        title: foundTask.title,
-        description: foundTask.description,
-        status: foundTask.status,
+    fetchTask();
+  }, [id]);
+
+  const fetchTask = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        toast.error("You are not logged in");
+        navigate("/login");
+        return;
+      }
+
+      const response = await axios.get(`https://task-managent-backend.onrender.com/tasks/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
-    } else {
-      navigate("/tasks");
+
+      if (response.data.data) {
+        setTask(response.data.data);
+        setUpdatedTask({
+          title: response.data.data.title,
+          description: response.data.data.description,
+          status: response.data.data.status,
+        });
+      } else {
+        toast.error("Task not found");
+        navigate("/tasks");
+      }
+    } catch (error) {
+      toast.error("Failed to fetch task details");
+      console.error("Error fetching task details:", error);
+      if (error.response?.status === 401) {
+        localStorage.removeItem("token");
+        navigate("/login");
+      }
     }
-  }, [id, navigate]);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,62 +64,96 @@ const TaskDetails = () => {
     }));
   };
 
-  const handleUpdate = () => {
-    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    const updatedTasks = tasks.map((t) =>
-      t.id === task.id ? { ...t, ...updatedTask } : t
-    );
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-    setTask({ ...task, ...updatedTask });
-    setIsEditing(false);
+  const handleUpdate = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        toast.error("You are not logged in");
+        navigate("/login");
+        return;
+      }
 
-    toast.success("Task updated successfully!", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  };
+      await axios.put(
+        `https://task-managent-backend.onrender.com/tasks/${id}`,
+        updatedTask,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-  const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete this task?")) {
-      const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-      const updatedTasks = tasks.filter((t) => t.id !== task.id);
-      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-      navigate("/tasks");
-
-      toast.error("Task deleted successfully!", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.success("Task updated successfully!");
+      setTask({ ...task, ...updatedTask });
+      setIsEditing(false);
+    } catch (error) {
+      toast.error("Failed to update task");
+      console.error("Error updating task:", error);
+      if (error.response?.status === 401) {
+        localStorage.removeItem("token");
+        navigate("/login");
+      }
     }
   };
 
-  const handleComplete = () => {
-    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    const updatedTasks = tasks.map((t) =>
-      t.id === task.id ? { ...t, status: "completed" } : t
-    );
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-    setTask({ ...task, status: "completed" });
+  const handleDelete = async () => {
+    if (window.confirm("Are you sure you want to delete this task?")) {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          toast.error("You are not logged in");
+          navigate("/login");
+          return;
+        }
 
-    toast.success("Task marked as complete!", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+        await axios.delete(`https://task-managent-backend.onrender.com/tasks/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        toast.error("Task deleted successfully!");
+        navigate("/tasks");
+      } catch (error) {
+        toast.error("Failed to delete task");
+        console.error("Error deleting task:", error);
+        if (error.response?.status === 401) {
+          localStorage.removeItem("token");
+          navigate("/login");
+        }
+      }
+    }
+  };
+
+  const handleComplete = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        toast.error("You are not logged in");
+        navigate("/login");
+        return;
+      }
+
+      await axios.put(
+        `https://task-managent-backend.onrender.com/tasks/${id}`,
+        { status: "Completed" },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      toast.success("Task marked as completed!");
+      setTask({ ...task, status: "Completed" });
+    } catch (error) {
+      toast.error("Failed to mark task as completed");
+      console.error("Error marking task as completed:", error);
+      if (error.response?.status === 401) {
+        localStorage.removeItem("token");
+        navigate("/login");
+      }
+    }
   };
 
   if (!task) {
@@ -101,111 +161,83 @@ const TaskDetails = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-gray-100 p-4">
-      <div
-        onClick={() => navigate("/tasks")}
-        className="cursor-pointer text-green-500 hover:text-green-300 transition duration-300 flex items-center gap-2 mb-6"
-        aria-label="Back to tasks"
-      >
-        <ChevronLeftIcon className="w-6 h-6" />
-        <span className="text-lg font-semibold">Back to Tasks</span>
-      </div>
+    <div className="min-h-screen bg-green-50 p-4">
+      <ToastContainer position="top-right" autoClose={2000} />
+      <div className="max-w-2xl mx-auto">
+        <div className="mb-6">
+          <button
+            onClick={() => navigate("/tasks")}
+            className="text-green-600 hover:text-green-800 flex items-center"
+          >
+            <ChevronLeftIcon className="w-6 h-6 mr-2" />
+            Back to Tasks
+          </button>
+        </div>
 
-      <div className="max-w-3xl mx-auto bg-gray-900 p-6 rounded-xl shadow-2xl">
-        <h1 className="text-3xl font-bold text-green-400 text-center mb-6">
-          Task Details
-        </h1>
-        <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <div className="bg-white p-6 rounded-lg shadow-md border border-green-100">
           {isEditing ? (
-            <>
-              <div className="mb-6">
-                <label className="block text-sm font-semibold text-yellow-300 mb-2">
-                  Title
-                </label>
-                <input
-                  type="text"
-                  name="title"
-                  value={updatedTask.title}
-                  onChange={handleChange}
-                  className="w-full p-3 bg-gray-700 border border-gray-600 text-gray-100 rounded-lg focus:ring-2 focus:ring-green-500 transition"
-                />
-              </div>
-              <div className="mb-6">
-                <label className="block text-sm font-semibold text-yellow-300 mb-2">
-                  Description
-                </label>
-                <textarea
-                  name="description"
-                  value={updatedTask.description}
-                  onChange={handleChange}
-                  className="w-full p-3 bg-gray-700 border border-gray-600 text-gray-100 rounded-lg focus:ring-2 focus:ring-green-500 transition"
-                />
-              </div>
-              <div className="mb-6">
-                <label className="block text-sm font-semibold text-yellow-300 mb-2">
-                  Status
-                </label>
-                <select
-                  name="status"
-                  value={updatedTask.status}
-                  onChange={handleChange}
-                  className="w-full p-3 bg-gray-700 border border-gray-600 text-gray-100 rounded-lg focus:ring-2 focus:ring-green-500 transition"
-                >
-                  <option value="pending">Pending</option>
-                  <option value="in-progress">In Progress</option>
-                  <option value="completed">Completed</option>
-                </select>
-              </div>
-              <div className="mt-6 flex flex-col md:flex-row gap-4 justify-center">
-                <button
-                  onClick={handleUpdate}
-                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-300 shadow-lg"
-                >
-                  Save Changes
-                </button>
-                <button
-                  onClick={() => setIsEditing(false)}
-                  className="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition duration-300 shadow-lg"
-                >
-                  Cancel
-                </button>
-              </div>
-            </>
+            <div>
+              <input
+                type="text"
+                name="title"
+                value={updatedTask.title}
+                onChange={handleChange}
+                className="p-3 border border-green-200 rounded-lg mb-4 w-full"
+              />
+              <textarea
+                name="description"
+                value={updatedTask.description}
+                onChange={handleChange}
+                className="p-3 border border-green-200 rounded-lg mb-4 w-full"
+              />
+              <select
+                name="status"
+                value={updatedTask.status}
+                onChange={handleChange}
+                className="p-3 border border-green-200 rounded-lg mb-4 w-full"
+              >
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+              </select>
+              <button
+                onClick={handleUpdate}
+                className="p-3 bg-green-600 text-white rounded-lg hover:bg-green-700"
+              >
+                Save Changes
+              </button>
+            </div>
           ) : (
-            <>
-              <h2 className="text-2xl font-semibold text-green-300 mb-4">
-                {task.title}
-              </h2>
-              <p className="text-gray-400 mb-6">{task.description}</p>
-              <p className="text-sm text-gray-300 mb-6">Status: {task.status}</p>
-              <div className="mt-6 flex flex-col md:flex-row gap-4 justify-center">
+            <div>
+              <h1 className="text-2xl font-semibold text-green-800 mb-4">{task.title}</h1>
+              <p className="text-sm text-green-700">{task.description}</p>
+              <p className="text-sm text-green-600 mt-2">Status: {task.status}</p>
+              <div className="mt-4 flex gap-4">
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition duration-300 shadow-lg"
+                  className="p-3 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700"
                 >
                   Edit Task
                 </button>
                 <button
                   onClick={handleDelete}
-                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-300 shadow-lg"
+                  className="p-3 bg-red-600 text-white rounded-lg hover:bg-red-700"
                 >
                   Delete Task
                 </button>
-                {task.status !== "completed" && (
+                {task.status !== "Completed" && (
                   <button
                     onClick={handleComplete}
-                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-300 shadow-lg"
+                    className="p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
                   >
-                    Mark as Complete
+                    Mark as Completed
                   </button>
                 )}
               </div>
-            </>
+            </div>
           )}
         </div>
       </div>
-
-      <ToastContainer />
     </div>
   );
 };
